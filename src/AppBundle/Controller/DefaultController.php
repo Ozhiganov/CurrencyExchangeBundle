@@ -16,11 +16,11 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         //All of this is just for your ease of testing CurrencyExchangeBundle
-        CurrencyCtrl::echoDu();
-        $serv =  $this->get('currency_exchange.currency_rate_best');
-        $serv->sayHi();
+//        CurrencyCtrl::echoDu();
+//        $serv =  $this->get('currency_exchange.currency_rate_best');
+//        $serv->sayHi();
         $ecb = $this->get('currency_exchange.currency_rates_ecb');
-        echo $ecb->queryCurrencyRate();
+        echo $ecb->queryCurrencyRate("USD", "EUR");
         return $this->render('base.html.twig');
     }
 }

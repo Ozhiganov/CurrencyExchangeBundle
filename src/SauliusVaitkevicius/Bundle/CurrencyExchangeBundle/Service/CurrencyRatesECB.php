@@ -1,19 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: saulius.vaitkevicius
- * Date: 7/21/2016
- * Time: 11:25 PM
- */
 
 namespace SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service;
 
 
 class CurrencyRatesECB //implements CurrencyRatesInterface
 {
-    public function queryCurrencyRate()//: float
+    public function queryCurrencyRate($from, $to)//: float
     {
-        $url = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDEUR%22,%20%22USDJPY%22,%20%22USDISK%22)&env=store://datatables.org/alltableswithkeys";
+        $url = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20("' . $from . $to . '")&env=store://datatables.org/alltableswithkeys';
 
         $ch = curl_init();
         $timeout = 0;
@@ -24,11 +18,14 @@ class CurrencyRatesECB //implements CurrencyRatesInterface
             "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
         curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         $rawdata = curl_exec($ch);
-        return $rawdata;
         curl_close($ch);
-        $data = explode('bld>', $rawdata);
-        $data = explode($to_Currency, $data[1]);
+        return $rawdata;
 
-        return round($data[0], 2);
+        $pattern = "/0.([0-9])\w+/";
+        if (preg_match($pattern, $rawdata, $matches)) {
+            return $rawdata[0];
+        } 
+
+        return 0;
     }
 }
