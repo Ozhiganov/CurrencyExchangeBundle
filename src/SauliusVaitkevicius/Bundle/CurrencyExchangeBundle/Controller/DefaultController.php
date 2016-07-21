@@ -10,4 +10,9 @@ class DefaultController extends Controller
     {
         return $this->render('CurrencyExchangeBundle:Default:index.html.twig');
     }
+    
+    public static function echoDu()
+    {
+        echo "currencyCtrl";
+    }
 }
