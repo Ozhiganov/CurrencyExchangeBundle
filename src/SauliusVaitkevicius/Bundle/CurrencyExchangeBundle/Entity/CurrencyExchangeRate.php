@@ -11,6 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
 class CurrencyExchangeRate
 {
     /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+    
+    /**
      * @ORM\Column(type="string")
      */
     private $provider;

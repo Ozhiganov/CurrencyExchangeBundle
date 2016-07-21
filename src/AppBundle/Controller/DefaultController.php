@@ -19,6 +19,8 @@ class DefaultController extends Controller
         CurrencyCtrl::echoDu();
         $serv =  $this->get('currency_exchange.currency_rate_best');
         $serv->sayHi();
+        $ecb = $this->get('currency_exchange.currency_rates_ecb');
+        echo $ecb->queryCurrencyRate();
         return $this->render('base.html.twig');
     }
 }
