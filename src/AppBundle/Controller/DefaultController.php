@@ -17,6 +17,8 @@ class DefaultController extends Controller
     {
         //All of this is just for your ease of testing CurrencyExchangeBundle
         CurrencyCtrl::echoDu();
+        $serv =  $this->get('currency_exchange.currency_rate_best');
+        $serv->sayHi();
         return $this->render('base.html.twig');
     }
 }
