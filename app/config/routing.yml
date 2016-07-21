@@ -1,0 +1,7 @@
+currency_exchange:
+    resource: "@CurrencyExchangeBundle/Resources/config/routing.xml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
