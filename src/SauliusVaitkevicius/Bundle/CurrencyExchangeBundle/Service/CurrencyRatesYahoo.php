@@ -3,9 +3,13 @@
 namespace SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service;
 
 
+use SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Entity\CurrencyExchangeRate;
+
 class CurrencyRatesYahoo implements CurrencyRatesInterface
 {
-    public function queryCurrencyRate($from, $to): float
+    private $provider = 'Yahoo';
+    
+    public function queryCurrencyRate($from, $to): CurrencyExchangeRate
     {
         $url = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20("' . $from . $to . '")&env=store://datatables.org/alltableswithkeys';
 
@@ -21,10 +25,9 @@ class CurrencyRatesYahoo implements CurrencyRatesInterface
         curl_close($ch);
 
         $pattern = "/(0\.\d{4})/";
-        if (preg_match($pattern, $rawdata, $matches)) {
-            return $matches[0];
-        } 
+        preg_match($pattern, $rawdata, $matches);
+        $rate = $matches[0];
 
-        return 0;
+        return new CurrencyExchangeRate($this->provider, $from, $to, $rate);
     }
 }

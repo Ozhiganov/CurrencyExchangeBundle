@@ -4,9 +4,7 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
-use SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Controller\DefaultController as CurrencyCtrl;
 
 class DefaultController extends Controller
 {
@@ -16,8 +14,13 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         //All of this is just for your ease of testing CurrencyExchangeBundle
-        $ecb = $this->get('currency_exchange.currency_rates_yahoo');
-        echo $ecb->queryCurrencyRate("USD", "EUR");
+        $yahoo = $this->get('currency_exchange.currency_rates_yahoo');
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($yahoo->queryCurrencyRate("USD", "EUR"));
+        $em->flush();
+        
+        
         return $this->render('base.html.twig');
     }
 }
