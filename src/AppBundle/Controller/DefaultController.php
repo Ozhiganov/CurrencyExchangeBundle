@@ -16,7 +16,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         //All of this is just for your ease of testing CurrencyExchangeBundle
-        $ecb = $this->get('currency_exchange.currency_rates_ecb');
+        $ecb = $this->get('currency_exchange.currency_rates_yahoo');
         echo $ecb->queryCurrencyRate("USD", "EUR");
         return $this->render('base.html.twig');
     }

@@ -7,7 +7,7 @@
     <services>
         <service id="currency_exchange.currency_rate_best" class="SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\CurrencyRateBestService">
         </service>
-        <service id="currency_exchange.currency_rates_ecb" class="SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\CurrencyRatesECB">
+        <service id="currency_exchange.currency_rates_yahoo" class="SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\CurrencyRatesYahoo">
         </service>
     </services>
 </container>
