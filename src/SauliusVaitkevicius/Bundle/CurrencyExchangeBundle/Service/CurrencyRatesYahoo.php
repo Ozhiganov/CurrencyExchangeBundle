@@ -3,12 +3,21 @@
 namespace SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service;
 
 
+use Doctrine\ORM\EntityManager;
 use SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Entity\CurrencyExchangeRate;
 
 class CurrencyRatesYahoo implements CurrencyRatesInterface
 {
     private $provider = 'Yahoo';
+    private $em;
+    private $repo;
     
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+        $this->repo = $em->getRepository('CurrencyExchangeBundle:CurrencyExchangeRate');
+    }
+
     public function queryCurrencyRate($from, $to): CurrencyExchangeRate
     {
         $url = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20("' . $from . $to . '")&env=store://datatables.org/alltableswithkeys';
@@ -28,6 +37,11 @@ class CurrencyRatesYahoo implements CurrencyRatesInterface
         preg_match($pattern, $rawdata, $matches);
         $rate = $matches[0];
 
-        return new CurrencyExchangeRate($this->provider, $from, $to, $rate);
+        $currency_exchange_rate = new CurrencyExchangeRate($this->provider, $from, $to, $rate);
+        
+        $this->em->persist($currency_exchange_rate);
+        $this->em->flush();
+        
+        return $currency_exchange_rate;
     }
 }

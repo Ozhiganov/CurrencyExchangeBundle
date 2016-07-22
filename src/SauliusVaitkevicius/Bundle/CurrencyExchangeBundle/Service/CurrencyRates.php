@@ -8,9 +8,9 @@ class CurrencyRates
 {
     protected $repo;
     
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->repo = $em->getRepository('CurrencyExchangeBundle:CurrencyExchangeRate');
+        $this->repo = $entityManager->getRepository('CurrencyExchangeBundle:CurrencyExchangeRate');
     }
 
     //checks to see if it's been more than 3 hours since last currency exchange rate update

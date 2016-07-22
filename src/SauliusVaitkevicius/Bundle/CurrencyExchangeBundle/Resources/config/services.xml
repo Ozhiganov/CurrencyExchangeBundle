@@ -6,6 +6,7 @@
 
     <services>
         <service id="currency_exchange.currency_rates_yahoo" class="SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\CurrencyRatesYahoo">
+            <argument>[ @doctrine.orm.entity_manager ]</argument>
         </service>
         <service id="currency_exchange.currency_rates" class="SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\CurrencyRates">
             <argument>[ @doctrine.orm.entity_manager ]</argument>
