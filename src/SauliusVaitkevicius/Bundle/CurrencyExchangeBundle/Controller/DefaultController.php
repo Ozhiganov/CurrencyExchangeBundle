@@ -6,13 +6,4 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
-    {
-        return $this->render('CurrencyExchangeBundle:Default:index.html.twig');
-    }
-    
-    public static function echoDu()
-    {
-        echo "currencyCtrl";
-    }
 }
