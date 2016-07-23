@@ -13,33 +13,24 @@ class CurrencyRateBestCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('demo:sayHello')
-            ->setDescription('Greet someone')
+            ->setName('currency:rate:best')
+            ->setDescription('Shows the best currency exchange rate for given currency')
             ->addArgument(
-                'name',
+                'from currency',
                 InputArgument::OPTIONAL,
-                'Who do you want to greet?'
-            )
-            ->addOption(
-                'yell',
-                null,
-                InputOption::VALUE_NONE,
-                'If set, the task will yell in uppercase letters'
-            )
-        ;
+                'Who do you want to greet?')
+            ->addArgument(
+                'to currency'
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $name = $input->getArgument('name');
-        if ($name) {
-            $text = 'Hello '.$name;
+        $currencies = $input->getArguments();
+        if (sizeof($currencies) == 3) {
+            $text = 'worx';
         } else {
-            $text = 'Hello';
-        }
-
-        if ($input->getOption('yell')) {
-            $text = strtoupper($text);
+            $text = 'please specify two arguments delimited with a space';
         }
 
         $output->writeln($text);
