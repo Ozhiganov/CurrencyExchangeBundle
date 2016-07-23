@@ -20,7 +20,7 @@ class DefaultController extends Controller
 //        $em->persist($yahoo->queryCurrencyRate("USD", "EUR"));
 //        $em->flush();
         
-        $yahoo->queryCurrencyRate("USD", "EUR");
+        var_dump($yahoo->getCurrencyRate("USD", "EUR")->getDatetimeUpdated());
         
         return $this->render('base.html.twig');
     }
