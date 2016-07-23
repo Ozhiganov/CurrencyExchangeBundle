@@ -19,6 +19,8 @@ class DefaultController extends Controller
             var_dump($provider->getCurrencyRate("USD", "EUR")->getDatetimeUpdated());
         }
         
+        echo $this->get('currency_exchange.currency_rates')->getBestCurrencyRate("USD", "EUR");
+        
         return $this->render('base.html.twig');
     }
 }
