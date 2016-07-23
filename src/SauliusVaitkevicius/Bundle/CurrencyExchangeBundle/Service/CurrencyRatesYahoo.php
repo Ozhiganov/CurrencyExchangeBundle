@@ -56,7 +56,6 @@ class CurrencyRatesYahoo implements CurrencyRatesInterface
                 $saved_rate->setRate($currency_exchange_rate->getRate());
                 $saved_rate->setDatetimeUpdated($currency_exchange_rate->getDatetimeUpdated());
 
-                $this->em->persist($saved_rate);
                 $this->em->flush();
                 
                 return $saved_rate;

@@ -15,11 +15,6 @@ class DefaultController extends Controller
     {
         //All of this is just for your ease of testing CurrencyExchangeBundle
         $yahoo = $this->get('currency_exchange.currency_rates_yahoo');
-        
-//        $em = $this->getDoctrine()->getManager();
-//        $em->persist($yahoo->queryCurrencyRate("USD", "EUR"));
-//        $em->flush();
-        
         var_dump($yahoo->getCurrencyRate("USD", "EUR")->getDatetimeUpdated());
         
         return $this->render('base.html.twig');
