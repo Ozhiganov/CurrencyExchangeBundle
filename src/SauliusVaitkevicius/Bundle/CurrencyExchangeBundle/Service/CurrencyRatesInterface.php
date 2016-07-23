@@ -7,10 +7,17 @@ use SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Entity\CurrencyExchangeRat
 interface CurrencyRatesInterface
 {
     /**
-     * @param integer $from
-     * @param integer $to
+     * @param string $from
+     * @param string $to
      * @return CurrencyExchangeRate
      */
     public function queryCurrencyRate($from, $to): CurrencyExchangeRate;
+
+    /**
+     * @param string $from
+     * @param string $to
+     * @return CurrencyExchangeRate
+     */
+    public function getCurrencyRate($from, $to): CurrencyExchangeRate;
 }
 

@@ -12,6 +12,11 @@ class CurrencyExchangeRate
 {
     /**
      * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
      * @ORM\Column(type="string")
      */
     private $provider;

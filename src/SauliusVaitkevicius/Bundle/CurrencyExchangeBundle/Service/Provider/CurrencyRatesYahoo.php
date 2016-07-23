@@ -4,7 +4,6 @@ namespace SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\Provider;
 
 use SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\CurrencyRates;
 use SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\CurrencyRatesInterface;
-use Doctrine\ORM\EntityManager;
 use SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Entity\CurrencyExchangeRate;
 
 class CurrencyRatesYahoo implements CurrencyRatesInterface
@@ -23,7 +22,7 @@ class CurrencyRatesYahoo implements CurrencyRatesInterface
 
         $rawdata = $this->currency_rates_service->queryCurrencyRateData($url);
         
-        $pattern = "/(0\.\d{4})/";
+        $pattern = "/(\d\.\d{4})/";
         preg_match($pattern, $rawdata, $matches);
         $rate = $matches[0];
 
@@ -34,6 +33,15 @@ class CurrencyRatesYahoo implements CurrencyRatesInterface
 
     public function getCurrencyRate($from, $to): CurrencyExchangeRate
     {
-        return $this->currency_rates_service->getCurrencyRate($this->provider, $from, $to);
+        $stored_rate = $this->currency_rates_service->isStored($this->provider, $from, $to);
+        if ($stored_rate) {
+            if ($this->currency_rates_service->isCached($stored_rate)) {
+                return $stored_rate;
+            } else {
+                return $this->currency_rates_service->updateRate($stored_rate, $this->queryCurrencyRate($from, $to));
+            }
+        } else {
+            return $this->currency_rates_service->persistNewRate($this->queryCurrencyRate($from, $to));
+        }
     }
 }
