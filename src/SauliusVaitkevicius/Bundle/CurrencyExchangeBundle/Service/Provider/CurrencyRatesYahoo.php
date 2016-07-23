@@ -1,8 +1,8 @@
 <?php
 
-namespace SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service;
+namespace SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\Provider;
 
-
+use SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\CurrencyRatesInterface;
 use Doctrine\ORM\EntityManager;
 use SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Entity\CurrencyExchangeRate;
 
