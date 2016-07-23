@@ -1,0 +1,8 @@
+services:
+    currency_exchange.currency_rates_yahoo:
+        class:  SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\CurrencyRatesYahoo
+        arguments: [ "@doctrine.orm.entity_manager" ]
+
+    currency_exchange.currency_rates:
+        class:  SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\CurrencyRates
+        arguments: [ "@doctrine.orm.entity_manager" ]
