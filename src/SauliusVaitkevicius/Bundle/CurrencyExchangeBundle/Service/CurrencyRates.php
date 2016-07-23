@@ -35,8 +35,7 @@ class CurrencyRates
     //Checks DB cache before updating/storing data
     public function getCurrencyRate($provider, $from, $to): CurrencyExchangeRate
     {
-        $repo = $this->em->getRepository('CurrencyExchangeBundle:CurrencyExchangeRate');
-        $saved_rate = $repo->find($provider);
+        $saved_rate = $this->repo->find($provider);
 
         if ($saved_rate) {
             $diff = $saved_rate->getDatetimeUpdated()->diff(new \DateTime());
@@ -60,5 +59,11 @@ class CurrencyRates
 
             return $currency_exchange_rate;
         }
+    }
+
+    public function getBestCurrencyRate($from, $to)
+    {
+//        $query = $this->em->createQuery('SELECT r FROM CurrencyExchangeBundle\Entity\CurrencyExchangeRate r ')
+
     }
 }
