@@ -14,10 +14,10 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         //All of this is just for your ease of testing CurrencyExchangeBundle
-        $yahoo = $this->get('currency_exchange.currency_rates_yahoo');
-        var_dump($yahoo->getCurrencyRate("USD", "EUR")->getDatetimeUpdated());
-        $tags = $this->get('exchange_rate_providers_collection');
-        var_dump($tags);
+        $providers_collection = $this->get('exchange_rate_providers_collection')->getProviders();
+        foreach ($providers_collection as $provider) {
+            var_dump($provider->getCurrencyRate("USD", "EUR")->getDatetimeUpdated());
+        }
         
         return $this->render('base.html.twig');
     }
