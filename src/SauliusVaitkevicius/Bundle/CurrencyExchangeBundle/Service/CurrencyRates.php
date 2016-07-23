@@ -32,6 +32,7 @@ class CurrencyRates
         return $rawdata;
     }
 
+    //Checks DB cache before updating/storing data
     public function getCurrencyRate($provider, $from, $to): CurrencyExchangeRate
     {
         $repo = $this->em->getRepository('CurrencyExchangeBundle:CurrencyExchangeRate');

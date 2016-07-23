@@ -2,7 +2,13 @@ services:
     currency_exchange.currency_rates_yahoo:
         class:  SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\Provider\CurrencyRatesYahoo
         arguments: [ '@currency_exchange.currency_rates' ]
+        tags:
+                    -  { name: exchange.rate.provider }
 
     currency_exchange.currency_rates:
         class:  SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\CurrencyRates
         arguments: [ "@doctrine.orm.entity_manager" ]
+
+    exchange_rate_providers_collection:
+        class:  SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\ExchangeRateProvidersCollection
+
