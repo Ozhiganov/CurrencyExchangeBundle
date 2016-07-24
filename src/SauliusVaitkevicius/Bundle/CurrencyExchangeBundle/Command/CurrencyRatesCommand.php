@@ -7,9 +7,28 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\ExchangeRateProvidersCollection;
 
 class CurrencyRatesCommand extends ContainerAwareCommand
 {
+    private $exchange_rate_providers_collection;
+
+    public function __construct(ExchangeRateProvidersCollection $exchange_rate_providers_collection)
+    {
+        $this->exchange_rate_providers_collection = $exchange_rate_providers_collection;
+        parent::__construct();
+    }
+    
+    public function getCurrencyRates($from, $to)
+    {
+        $providers = [];
+        $providers_collection = $this->exchange_rate_providers_collection->getProviders();
+        foreach ($providers_collection as $provider) {
+            $providers[] = $provider->getCurrencyRate($from, $to);
+        }
+        return $providers;
+    }
+    
     protected function configure()
     {
         $this

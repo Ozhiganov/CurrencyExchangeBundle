@@ -12,3 +12,15 @@ services:
     exchange_rate_providers_collection:
         class:  SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\ExchangeRateProvidersCollection
 
+    currency_exchange.rates:
+        class:  SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Command\CurrencyRatesCommand
+        arguments: [ '@exchange_rate_providers_collection' ]
+        tags:
+                    -  { name: console.command }
+
+    currency_exchange.rate_best:
+        class:  SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Command\CurrencyRateBestCommand
+        arguments: [ '@exchange_rate_providers_collection' ]
+        tags:
+                    -  { name: console.command }
+

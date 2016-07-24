@@ -67,17 +67,6 @@ class CurrencyRates
          return $rate;
     }
 
-    public function getBestCurrencyRate($from, $to)
-    {
-        $query = $this->em->createQuery("SELECT r.rate FROM CurrencyExchangeBundle:CurrencyExchangeRate r WHERE r.from_currency = :from AND r.to_currency = :to ORDER BY r.rate")->setMaxResults(1);
-        $query->setParameters(['from' => $from, 'to' => $to]);
-        $rates = $query->getResult();
-        if ($rates) {
-            return $rates[0]['rate'];
-        }
-        return new \Exception('No rates for these currencies were found');
-    }
-
     public function getCurrencyRates($from, $to)
     {
         $query = $this->em->createQuery("SELECT r.provider, r.rate FROM CurrencyExchangeBundle:CurrencyExchangeRate r WHERE r.from_currency = :from AND r.to_currency = :to ORDER BY r.rate");
