@@ -2,6 +2,7 @@
 
 namespace SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Command;
 
+use SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Entity\CurrencyExchangeRate;
 use SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\ExchangeRateProvidersCollection;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,10 +20,20 @@ class CurrencyRateBestCommand extends ContainerAwareCommand
         parent::__construct();
     }
 
+    //used in getBestCurrencyRate to sort objects by provider currency exchange rates
+    private function cmp(CurrencyExchangeRate $a, CurrencyExchangeRate $b)
+    {
+        if ($a.getRate() == $b.getRate()) {
+            return 0;
+        }
+        return ($a < $b) ? -1 : 1;
+    }
+
     public function getBestCurrencyRate($from, $to)
     {
         $providers_collection = $this->exchange_rate_providers_collection->getProviders();
-        return $providers_collection[0]->getCurrencyRate($from, $to);
+        usort($providers_collection, array($this, "cmp"));
+        return array_pop($providers_collection)->getCurrencyRate($from, $to);
     }
 
     protected function configure()
@@ -31,25 +42,24 @@ class CurrencyRateBestCommand extends ContainerAwareCommand
             ->setName('currency:rate:best')
             ->setDescription('Shows the best currency exchange rate for given currency')
             ->addArgument(
-                'from currency',
-                InputArgument::OPTIONAL,
-                'Who do you want to greet?')
+                'from currency')
             ->addArgument(
                 'to currency'
             );
     }
 
+    //TODO write more validations to see if everything's going through smoothly (not more than 2 arguments, etc.)
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $currencies = $input->getArguments();
-        if (sizeof($currencies) == 3) {
-            $text = 'worx';
+        if ($currencies['from currency'] AND $currencies['to currency']) {
+            $rateObj = $this->getBestCurrencyRate($currencies['from currency'], $currencies['to currency']);
+            $rate = $rateObj->getRate();
+            $provider = $rateObj->getProvider();
+            $text = $provider . ' => ' . $rate;
         } else {
             $text = 'please specify two arguments delimited with a space';
         }
-        $rateObj = $this->getBestCurrencyRate($currencies['from currency'], $currencies['to currency']);
-        $rate = $rateObj->getRate();
-        $provider = $rateObj->getProvider();
-        $output->writeln($provider . ' => ' . $rate);
+        $output->writeln($text);
     }
 }

@@ -21,7 +21,7 @@ class DefaultController extends Controller
         
 //        var_dump($this->get('currency_exchange.rate_best')->getBestCurrencyRate('EUR', "USD"));
         
-        foreach ($this->get('currency_exchange.currency_rates')->getCurrencyRates('EUR', "USD") as $provider) {
+        foreach ($this->get('currency_exchange.rates')->getCurrencyRates('EUR', "USD") as $provider) {
             var_dump($provider);
         }
         

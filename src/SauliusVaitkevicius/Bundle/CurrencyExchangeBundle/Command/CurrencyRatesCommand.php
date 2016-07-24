@@ -32,35 +32,25 @@ class CurrencyRatesCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('demo:greet')
-            ->setDescription('Greet someone')
+            ->setName('currency:rates')
+            ->setDescription('get currency rates for given currencies')
             ->addArgument(
-                'name',
-                InputArgument::OPTIONAL,
-                'Who do you want to greet?'
-            )
-            ->addOption(
-                'yell',
-                null,
-                InputOption::VALUE_NONE,
-                'If set, the task will yell in uppercase letters'
-            )
-        ;
+                'from currency')
+            ->addArgument(
+                'to currency');
     }
 
+    //TODO write more validations to see if everything's going through smoothly (not more than 2 arguments, etc.)
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $name = $input->getArgument('name');
-        if ($name) {
-            $text = 'Hello '.$name;
+        $currencies = $input->getArguments();
+        if ($currencies['from currency'] AND $currencies['to currency']) {
+            $rateObj = $this->getCurrencyRates($currencies['from currency'], $currencies['to currency']);
+            $rate = $rateObj->getRate();
+            $provider = $rateObj->getProvider();
         } else {
-            $text = 'Hello';
+            $text = 'please specify two arguments delimited with a space';
         }
-
-        if ($input->getOption('yell')) {
-            $text = strtoupper($text);
-        }
-
         $output->writeln($text);
     }
 }
