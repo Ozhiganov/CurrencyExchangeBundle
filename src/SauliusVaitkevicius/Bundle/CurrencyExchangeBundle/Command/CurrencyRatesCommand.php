@@ -41,13 +41,20 @@ class CurrencyRatesCommand extends ContainerAwareCommand
     }
 
     //TODO write more validations to see if everything's going through smoothly (not more than 2 arguments, etc.)
+    //TODO draw a better table :D 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $currencies = $input->getArguments();
         if ($currencies['from currency'] AND $currencies['to currency']) {
-            $rateObj = $this->getCurrencyRates($currencies['from currency'], $currencies['to currency']);
-            $rate = $rateObj->getRate();
-            $provider = $rateObj->getProvider();
+            $providers = $this->getCurrencyRates($currencies['from currency'], $currencies['to currency']);
+            $text = ''; 
+            foreach ($providers as $provider) {
+                $rate = $provider->getRate();
+                $provider_name = $provider->getProvider();
+                $text .= "\n--------------------";
+                $text .= "\n| " . $provider_name . " | " . $rate . " |";
+            }
+            $text.= "\n--------------------";
         } else {
             $text = 'please specify two arguments delimited with a space';
         }
