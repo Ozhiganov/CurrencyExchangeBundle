@@ -11,6 +11,12 @@ services:
         tags:
                     -  { name: exchange.rate.provider }
 
+    currency_exchange.currency_rates_freeconv:
+        class:  SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\Provider\CurrencyRatesFreeConv
+        arguments: [ '@currency_exchange.currency_rates' ]
+        tags:
+                    -  { name: exchange.rate.provider }
+
     currency_exchange.currency_rates:
         class:  SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\CurrencyRates
         arguments: [ "@doctrine.orm.entity_manager" ]
