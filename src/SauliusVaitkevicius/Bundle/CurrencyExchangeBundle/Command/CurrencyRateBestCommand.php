@@ -47,7 +47,9 @@ class CurrencyRateBestCommand extends ContainerAwareCommand
         } else {
             $text = 'please specify two arguments delimited with a space';
         }
-
-        $output->writeln($this->getBestCurrencyRate($currencies[1], $currencies[2]));
+        $rateObj = $this->getBestCurrencyRate($currencies['from currency'], $currencies['to currency']);
+        $rate = $rateObj->getRate();
+        $provider = $rateObj->getProvider();
+        $output->writeln($provider . ' => ' . $rate);
     }
 }

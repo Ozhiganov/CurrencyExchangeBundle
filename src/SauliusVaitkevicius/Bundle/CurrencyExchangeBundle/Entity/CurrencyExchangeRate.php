@@ -74,6 +74,14 @@ class CurrencyExchangeRate
     }
 
     /**
+     * @return string
+     */
+    public function getProvider()
+    {
+        return $this->provider;
+    }
+
+    /**
      * CurrencyExchangeRate constructor.
      * @param $provider
      * @param $from
