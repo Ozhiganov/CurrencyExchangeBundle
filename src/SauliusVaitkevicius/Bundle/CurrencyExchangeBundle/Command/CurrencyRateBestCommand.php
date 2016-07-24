@@ -23,17 +23,21 @@ class CurrencyRateBestCommand extends ContainerAwareCommand
     //used in getBestCurrencyRate to sort objects by provider currency exchange rates
     private function cmp(CurrencyExchangeRate $a, CurrencyExchangeRate $b)
     {
-        if ($a.getRate() == $b.getRate()) {
+        if ($a->getRate() == $b->getRate()) {
             return 0;
         }
-        return ($a < $b) ? -1 : 1;
+        return ($a->getRate() < $b->getRate()) ? -1 : 1;
     }
 
     public function getBestCurrencyRate($from, $to)
     {
         $providers_collection = $this->exchange_rate_providers_collection->getProviders();
-        usort($providers_collection, array($this, "cmp"));
-        return array_pop($providers_collection)->getCurrencyRate($from, $to);
+        $providers = [];
+        foreach ($providers_collection as $provider) {
+            $providers[] = $provider->getCurrencyRate($from, $to);
+        }
+        usort($providers, array($this, "cmp"));
+        return array_pop($providers);
     }
 
     protected function configure()
