@@ -5,6 +5,12 @@ services:
         tags:
                     -  { name: exchange.rate.provider }
 
+    currency_exchange.currency_rates_google:
+        class:  SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\Provider\CurrencyRatesGoogle
+        arguments: [ '@currency_exchange.currency_rates' ]
+        tags:
+                    -  { name: exchange.rate.provider }
+
     currency_exchange.currency_rates:
         class:  SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service\CurrencyRates
         arguments: [ "@doctrine.orm.entity_manager" ]
