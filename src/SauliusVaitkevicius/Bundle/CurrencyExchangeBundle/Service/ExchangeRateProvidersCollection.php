@@ -2,7 +2,6 @@
 
 namespace SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service;
 
-
 class ExchangeRateProvidersCollection
 {
     private $providers;
@@ -14,7 +13,7 @@ class ExchangeRateProvidersCollection
 
     public function addProvider(CurrencyRatesInterface $provider)
     {
-        $this->providers[] = $provider;   
+        $this->providers[] = $provider;
     }
 
     public function getProviders()

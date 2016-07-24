@@ -20,4 +20,3 @@ interface CurrencyRatesInterface
      */
     public function getCurrencyRate($from, $to): CurrencyExchangeRate;
 }
-

@@ -5,7 +5,7 @@ namespace SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Service;
 use SauliusVaitkevicius\Bundle\CurrencyExchangeBundle\Entity\CurrencyExchangeRate;
 use Doctrine\ORM\EntityManager;
 
-class CurrencyRates 
+class CurrencyRates
 {
     private $em;
     private $repo;
@@ -20,12 +20,15 @@ class CurrencyRates
     {
         $ch = curl_init();
         $timeout = 0;
-        curl_setopt ($ch, CURLOPT_URL, $url);
-        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-        curl_setopt ($ch, CURLOPT_USERAGENT,
-            "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
-        curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        curl_setopt(
+            $ch,
+            CURLOPT_USERAGENT,
+            "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)"
+        );
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         $rawdata = curl_exec($ch);
         curl_close($ch);
 

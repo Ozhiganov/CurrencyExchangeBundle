@@ -33,19 +33,21 @@ class CurrencyRatesCommand extends ContainerAwareCommand
             ->setName('currency:rates')
             ->setDescription('get currency rates for given currencies')
             ->addArgument(
-                'from currency')
+                'from currency'
+            )
             ->addArgument(
-                'to currency');
+                'to currency'
+            );
     }
 
     //TODO write more validations to see if everything's going through smoothly (not more than 2 arguments, etc.)
-    //TODO draw a better table :D 
+    //TODO draw a better table :D
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $currencies = $input->getArguments();
-        if ($currencies['from currency'] AND $currencies['to currency']) {
+        if ($currencies['from currency'] and $currencies['to currency']) {
             $providers = $this->getCurrencyRates($currencies['from currency'], $currencies['to currency']);
-            $text = ''; 
+            $text = '';
             foreach ($providers as $provider) {
                 $rate = $provider->getRate();
                 $provider_name = $provider->getProvider();

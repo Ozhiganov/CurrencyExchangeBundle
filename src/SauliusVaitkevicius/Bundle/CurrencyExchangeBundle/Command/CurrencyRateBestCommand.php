@@ -44,7 +44,8 @@ class CurrencyRateBestCommand extends ContainerAwareCommand
             ->setName('currency:rate:best')
             ->setDescription('Shows the best currency exchange rate for given currency')
             ->addArgument(
-                'from currency')
+                'from currency'
+            )
             ->addArgument(
                 'to currency'
             );
@@ -54,7 +55,7 @@ class CurrencyRateBestCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $currencies = $input->getArguments();
-        if ($currencies['from currency'] AND $currencies['to currency']) {
+        if ($currencies['from currency'] and $currencies['to currency']) {
             $rateObj = $this->getBestCurrencyRate($currencies['from currency'], $currencies['to currency']);
             $rate = $rateObj->getRate();
             $provider = $rateObj->getProvider();
